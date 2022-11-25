@@ -1,22 +1,28 @@
-#!/usr/bin/env groovy
-
 pipeline {
-    agent any
-    tools {
-        nodejs 'node-8.1.3'
+  agent any
+    
+  tools {nodejs "nodejs"}
+    
+  stages {
+        
+    stage('Git') {
+      steps {
+        git branch: 'main', url: 'https://github.com/sgeethapriya/nodejs_sample.git'
+      }
     }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'nodejs --version'
-                sh 'npm install'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'nodejs --version'
-                echo "This project is tested"
-            }
-        }
+     
+    stage('Build') {
+      steps {
+        sh 'npm install'
+         sh 'node hello_world.js'
+      }
+    }  
+    
+            
+    stage('Test') {
+      steps {
+        sh 'node test'
+      }
     }
+  }
 }
